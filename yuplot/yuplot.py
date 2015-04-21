@@ -15,7 +15,7 @@ class yuplot(object):
 
 
     def _add_data(self, ref = 1, column_to_plot = 2):
-        return "plot '" + self.outputfile + "' using " + str(ref) + ":" + str(column_to_plot) + " title " + "'" + str(column_to_plot) + "'" + "with linespoints"
+        return "plot '" + self.outputfile + "' using " + str(ref) + ":" + str(column_to_plot) + " title " + "'" + str(column_to_plot) + "'" + " with lines"
 
         
 
@@ -36,7 +36,7 @@ class yuplot(object):
                 for each in all_lines:
                     each = each.replace("\r","")
                     each = each.replace(",", "\t")
-                    f.write(each + '\n')
+                    f.write(each)
                 
             self.plot_string = "gnuplot -e \"" + self._add_data() + ";" + " set term png; set output 'plot.png'; replot\"\n"
 
