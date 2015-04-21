@@ -14,10 +14,13 @@ class yuplot(object):
             f.write(content)
 
 
-    def _add_data(self, ref = 1, column_to_plot = 2):
-        return "plot '" + self.outputfile + "' using " + str(ref) + ":" + str(column_to_plot) + " title " + "'" + str(column_to_plot) + "'" + " with lines"
-
-        
+    def _add_data(self, ref = 1):
+        strings_to_return = ''
+        for n in range(self.columns_to_plot-1):
+            strings_to_return += "plot '" + self.outputfile + "' using " + str(ref) + ":" + str(n + 2) + " title " + "'" + str(n + 2) + "'" + " with lines"
+            if n != self.columns_to_plot - 1:
+                strings_to_return += ','
+        return strings_to_return
 
     def __init__(self, inputfile = None, outputfile = 'data.txt', shfile = 'plot.sh'):
         
@@ -37,7 +40,8 @@ class yuplot(object):
                     each = each.replace("\r","")
                     each = each.replace(",", "\t")
                     f.write(each)
-                
+            self.columns_to_plot = len(each.split()) - 1
+            print self.columns_to_plot
             self.plot_string = "gnuplot -e \"" + self._add_data() + ";" + " set term png; set output 'plot.png'; replot\"\n"
 
             self._wrt_plot_shell(self.plot_string)
