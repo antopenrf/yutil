@@ -27,8 +27,11 @@ class yuplot(object):
     def _add_ylabel(self):
         return "set ylabel '" + self.ylabel + "';"
 
+    def _add_title(self):
+        return "set title '" + self.title + "';"
+    
     def plot(self):
-        self.plot_string = "gnuplot -e \" plot" + self._add_data() + ";" + " set term png;" + self._add_xlabel() + self._add_ylabel() + self._xlog_on() + self._ylog_on() + " set output 'plot.png'; replot\"\n"
+        self.plot_string = "gnuplot -e \" plot" + self._add_data() + ";" + " set term png;" + self._add_xlabel() + self._add_ylabel() + self._xlog_on() + self._ylog_on() + " set output 'plot.png';" + self._add_title() + " set grid; replot\"\n"
         with open(self.shfile, 'w') as f:
             f.write(self.plot_string)
 
@@ -74,6 +77,11 @@ class yuplot(object):
         except:
             self.ylog = '0'
 
+        try:
+            self.title = sys.argv[6]
+        except:
+            self.title = 'plot'
+            
         with open(self.inputfile, 'r') as f:
             all_lines = f.readlines()
 
