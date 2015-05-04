@@ -16,12 +16,12 @@ data = data.split()
 
 
 
-for i,each in enumerate(data[:-10]):
+for i,each in enumerate(data[130:-10]):
     each = re.sub(r'<.*>*', '', each)
     each = re.sub(r'.*>$', '', each)
     each = re.sub(r'href.*>', '', each)
-    each = re.sub(r'align.*', '', each)
-    each = re.sub(r'nowrap>', '', each)
+    each = re.sub(r'align=center', '', each)
+    each = re.sub(r'nowrap', '', each)
     each = re.sub(r'border=0', '', each)
     each = re.sub(r'style=', '', each)
     each = re.sub(r'"color.*', '', each)
