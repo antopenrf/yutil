@@ -1,0 +1,8 @@
+./yuplot/*.csv
+./yuplot/*.png
+./yuplot/*.txt
+./yudrive/*.json
+
+*.png
+*.txt
+*.json
