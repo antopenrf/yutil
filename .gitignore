@@ -1,8 +1,6 @@
-./yuplot/*.csv
-./yuplot/*.png
-./yuplot/*.txt
-./yudrive/*.json
-
-*.png
-*.txt
-*.json
+yuplot/*.csv
+yuplot/*.png
+yuplot/*.txt
+yuplot/*.pyc
+yubus/*.pyc
+yuget/*.pyc
