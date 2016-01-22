@@ -1,4 +1,4 @@
-import urllib
+
 import sys
 import re
 
@@ -8,25 +8,49 @@ else:
     bus = sys.argv[1]
 busapi = "http://pda.5284.com.tw/MQS/businfo2.jsp?routeId="+str(bus)
 
-u = urllib.urlopen(busapi)
+if sys.version_info > (3,):
+    import urllib.request
+    opener = urllib.request.urlopen
+    u = opener(busapi)
+    data = u.read().decode('utf-8')
+    data = data.split()
+else:
+    import urllib
+    opener = urllib.urlopen
+    u = opener(busapi)
+    data = u.read()
+    data = data.split()
 
-data = u.read()
-
-data = data.split()
 
 
 
+
+count = 0
+first_stop = "none"
 for i,each in enumerate(data[130:-10]):
-    each = re.sub(r'<.*>*', '', each)
-    each = re.sub(r'.*>$', '', each)
-    each = re.sub(r'href.*>', '', each)
-    each = re.sub(r'align=center', '', each)
-    each = re.sub(r'nowrap', '', each)
-    each = re.sub(r'border=0', '', each)
-    each = re.sub(r'style=', '', each)
-    each = re.sub(r'"color.*', '', each)
-    each = re.sub(r'"810.*', '', each)    
-    each = re.sub(r'title=', '', each)            
-    print(each)
+    each = re.sub('<.*>*', '', each)
+    each = re.sub('.*>$', '', each)
+    each = re.sub('href.*>', '', each)
+    each = re.sub('align=cente', '', each)
+    each = re.sub('nowrap', '', each)
+    each = re.sub('border=0', '', each)
+    each = re.sub('style=', '', each)
+    each = re.sub('"color.*', '', each)
+    each = re.sub('"810.*', '', each)    
+    each = re.sub('title=', '', each)            
+    if each == 'r' or each == '' or each[0] == '''"''' or each[:3] in ("wid", "val", "cla"):
+        pass
+    else:
+        count += 1
+
+        if count == 2:
+            return_bound = each
+            pass
+
+        else:
+            if each[0] == ">":
+                print(each[1:] + '\n')
+            else:
+                print(each)
 
             
